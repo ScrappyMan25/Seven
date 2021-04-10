@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Assets/Player _Temp_64x/Head.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Player _Temp_64x/Arm.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Player _Temp_64x/Shoulder.png" type="Texture" id=3]
 [ext_resource path="res://Assets/Player _Temp_64x/Feet.png" type="Texture" id=4]
 [ext_resource path="res://Scripts/Player.gd" type="Script" id=5]
+[ext_resource path="res://Object/dash_sprite.tscn" type="PackedScene" id=6]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -41,8 +42,12 @@ animations = [ {
 [sub_resource type="CircleShape2D" id=5]
 radius = 15.1258
 
+[sub_resource type="Curve" id=6]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), -2.96898, 0.0, 0, 0 ]
+
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 5 )
+dash_object = ExtResource( 6 )
 
 [node name="YSort" type="YSort" parent="."]
 
@@ -64,3 +69,19 @@ shape = SubResource( 5 )
 [node name="Line2D" type="Line2D" parent="."]
 points = PoolVector2Array( 0.0078125, 0.0078125, -0.0132256, -4.46056 )
 width = 1.0
+
+[node name="dash_timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="dash_particles" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 80
+local_coords = false
+emission_shape = 1
+emission_sphere_radius = 17.0
+direction = Vector2( 0, 0 )
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 19.0
+angular_velocity = -180.0
+scale_amount_curve = SubResource( 6 )
