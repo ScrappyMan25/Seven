@@ -4,7 +4,7 @@
 [ext_resource path="res://Scripts/Player.gd" type="Script" id=5]
 [ext_resource path="res://Scenes/Object/dash_sprite.tscn" type="PackedScene" id=6]
 
-[sub_resource type="SpriteFrames" id=3]
+[sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 1 ) ],
 "loop": true,
@@ -12,7 +12,7 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="Curve" id=6]
+[sub_resource type="Curve" id=2]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), -2.96898, 0.0, 0, 0 ]
 
 [node name="Player" type="KinematicBody2D"]
@@ -20,7 +20,7 @@ script = ExtResource( 5 )
 dash_object = ExtResource( 6 )
 
 [node name="Shoulder" type="AnimatedSprite" parent="."]
-frames = SubResource( 3 )
+frames = SubResource( 1 )
 
 [node name="dash_timer" type="Timer" parent="."]
 one_shot = true
@@ -36,8 +36,12 @@ spread = 180.0
 gravity = Vector2( 0, 0 )
 initial_velocity = 19.0
 angular_velocity = -180.0
-scale_amount_curve = SubResource( 6 )
+scale_amount_curve = SubResource( 2 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PoolVector2Array( 24.0158, 17.1794, 1.07519, -28.9246, -27.5449, 17.7362 )
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PoolVector2Array( 0.614746, -24.703, -0.277161, 15.4327 )
+default_color = Color( 0, 0.164706, 1, 1 )
 [connection signal="timeout" from="dash_timer" to="." method="_on_dash_timer_timeout"]
