@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/PlayerProjectile.tscn" type="PackedScene" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 486, 10 )
@@ -39,3 +40,6 @@ scale = Vector2( 0.64, 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Border4"]
 shape = SubResource( 1 )
+
+[node name="PlayerProjectile" parent="." instance=ExtResource( 3 )]
+position = Vector2( 590.408, 425.183 )
