@@ -1,8 +1,41 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 486, 10 )
 
 [node name="Node" type="Node"]
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 495.226, 253.286 )
+
+[node name="Border" type="StaticBody2D" parent="."]
+position = Vector2( 511.265, 0 )
+scale = Vector2( 1.12, 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Border"]
+shape = SubResource( 1 )
+
+[node name="Border2" type="StaticBody2D" parent="."]
+position = Vector2( 511.265, 598.718 )
+scale = Vector2( 1.12, 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Border2"]
+shape = SubResource( 1 )
+
+[node name="Border3" type="StaticBody2D" parent="."]
+position = Vector2( 6.10352e-05, 297.677 )
+rotation = 1.5708
+scale = Vector2( 0.64, 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Border3"]
+shape = SubResource( 1 )
+
+[node name="Border4" type="StaticBody2D" parent="."]
+position = Vector2( 1027.58, 292.632 )
+rotation = 1.5708
+scale = Vector2( 0.64, 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Border4"]
+shape = SubResource( 1 )
