@@ -7,10 +7,10 @@ var number_of_bounces = 7
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	velocity = 490
-	direction = get_global_mouse_position() - position
 	#set velocity to something 
+	velocity = 490
 	#set direction to something
+	direction = get_global_mouse_position() - position
 	pass # Replace with function body.
 
 func _physics_process(delta: float) -> void:

@@ -1,82 +1,93 @@
 extends KinematicBody2D
 
-# Basee Player Stats
-var Speed = 400
-var screen_size
-var velocity = Vector2.ZERO
+#Variable to declare the type of User Device - Dynamic
+const KEYBOARD = 0
+const CONTROLLER = 1
+const MOBILE = 1
+var InputDevice
 
-#Dash
-export(PackedScene) var dash_object #This is only for if you want to add like a dashing effect
-export var dash_speed = 1000
-export var dash_length = 0.2
-var is_dashing : bool = false
+#Variables required for movement
+var speed : float = 400
+var velocity : Vector2 = Vector2.ZERO
+
+#for COntroller
+var rotation_dir = 0
+var rotation_speed = 5
+
+#for Dash
 var can_dash : bool = true
+var is_dashing : bool = false
+var dash_speed = 1000
+var dash_length = 0.2
 var dash_direction : Vector2
-onready var dash_timer = $dash_timer
-onready var dash_particles = $dash_particles
 
-#When Object enters scene tree
-func _ready():
-	pass
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
 
-#Repeats
-func _physics_process(_delta):
-	look_at(get_global_mouse_position())
-	rotation_degrees += 90
+func _physics_process(_delta: float) -> void:
 	get_input()
-	handle_dash()
 	if is_dashing:
 		velocity = move_and_slide(dash_direction)
+#		is_dashing = false
 	else:
 		velocity = move_and_slide(velocity)
 	pass
+	if InputDevice == CONTROLLER:
+		rotation += rotation_dir * rotation_speed * _delta
 
-#Movement 2
-func get_input():
-	velocity = Vector2.ZERO
-	if Input.is_action_pressed("ui_right"):
-		velocity += transform.x * Speed
-	if Input.is_action_pressed("ui_left"):
-		velocity -= transform.x * Speed
-	if Input.is_action_pressed("ui_down"):
-		velocity += transform.y * Speed
-	if Input.is_action_pressed("ui_up"):
-		velocity -= transform.y * Speed
-	velocity = velocity.normalized() * Speed
-	pass
-
-func handle_dash():
-	#check dash - Press Space to dash
+func get_input() -> void:
+	match(InputDevice):
+		KEYBOARD:
+			look_at(get_global_mouse_position())
+			velocity = Vector2()
+			if Input.is_action_pressed("ui_down"):
+				velocity = Vector2(-speed, 0).rotated(rotation)
+			if Input.is_action_pressed("ui_up"):
+				velocity = Vector2(speed, 0).rotated(rotation)
+			pass
+		CONTROLLER:
+			rotation_dir = 0
+			velocity = Vector2()
+			if Input.is_action_pressed("point_right"):
+				rotation_dir += 1
+			if Input.is_action_pressed("point_left"):
+				rotation_dir -= 1
+			if Input.is_action_pressed("ui_down"):
+				velocity = Vector2(-speed, 0).rotated(rotation)
+			if Input.is_action_pressed("ui_up"):
+				velocity = Vector2(speed, 0).rotated(rotation)
+			pass
+		MOBILE:
+			pass
+	#Dash Code
 	if Input.is_action_just_pressed("ui_select") and can_dash:
 		is_dashing = true
 		can_dash = false
-		dash_direction = get_direction_from_input()
-		dash_timer.start(dash_length)
-		pass
-	if is_dashing: #Can add dash textures
-		var dash_node = dash_object.instance()
-#		dash_node.texture = (animation.frames.get_frame(animation.animation, animation.frame) <- to add textures for more effect
-		dash_node.global_position = global_position
-		get_parent().add_child(dash_node)
-		#turn particles on (currently using default particle)
-		dash_particles.emitting = true
-		if is_on_wall():
-			is_dashing = false
-		pass
+		$DashTimer.start(dash_length)
+#		dash_direction = velocity.clamped(1) * dash_speed
+		dash_direction = Vector2.RIGHT.rotated(rotation) * dash_speed
+		$DashParticles.emitting = true
 	else:
-		dash_particles.emitting = false
 		can_dash = true
+		$DashParticles.emitting = false
+		pass
 	pass
 
-#gets the direction and dashes
-func get_direction_from_input() -> Vector2:
-	var move_dir = Vector2()
-	#gets the direction of the mouse
-	move_dir = get_global_mouse_position() - position
-	move_dir = move_dir.clamped(1)
-	return move_dir * dash_speed
+func _input(event):
+	if(event is InputEventKey or event is InputEventMouseMotion):
+		InputDevice = KEYBOARD
+		pass
+	elif(event is InputEventJoypadButton || event is InputEventJoypadMotion):
+		InputDevice = CONTROLLER
+		pass
+	elif(event is InputEventScreenTouch):
+		InputDevice = MOBILE
+		pass
+pass
 
 #Signals
-func _on_dash_timer_timeout() -> void:
+
+func _on_DashTimer_timeout() -> void:
 	is_dashing = false
 	pass # Replace with function body.
