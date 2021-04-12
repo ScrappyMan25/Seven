@@ -9,6 +9,8 @@ var InputDevice
 #Variables required for movement
 var speed : float = 400
 var velocity : Vector2 = Vector2.ZERO
+var friction = 0.0001
+var acceleration = 0.001
 
 #for COntroller
 var rotation_dir = 0
@@ -27,6 +29,15 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	get_input()
+#	var axis = get_input()
+#	if axis == Vector2.ZERO:
+#		apply_friction(acceleration * _delta)
+#	else:
+#		apply_acceleration(acceleration * _delta * axis)
+#	if direction.length() > 0:
+#		velocity = lerp(velocity,direction.normalized()*speed,acceleration)
+#	else:
+#		velocity = lerp(velocity, Vector2.ZERO, friction)
 	if is_dashing:
 		velocity = move_and_slide(dash_direction)
 #		is_dashing = false
@@ -36,30 +47,57 @@ func _physics_process(_delta: float) -> void:
 	if InputDevice == CONTROLLER:
 		rotation += rotation_dir * rotation_speed * _delta
 
-func get_input() -> void:
+#func apply_acceleration(acceleration):
+#	velocity += acceleration
+#	velocity = velocity.clamped(speed)
+#	pass
+#
+#func apply_friction(amount):
+#	if velocity.length() > amount:
+#		velocity -= velocity.normalized() * amount
+#	else:
+#		velocity = Vector2.ZERO
+#	pass
+
+func get_input() -> void: 
+#	var input = Vector2()
 	match(InputDevice):
 		KEYBOARD:
 			look_at(get_global_mouse_position())
 			velocity = Vector2()
 			if Input.is_action_pressed("ui_down"):
 				velocity = Vector2(-speed, 0).rotated(rotation)
+#				input.y += 1
 			if Input.is_action_pressed("ui_up"):
+#				input.y -= 1
 				velocity = Vector2(speed, 0).rotated(rotation)
+#			if velocity != Vector2.ZERO:
+#				velocity = lerp(velocity, velocity * speed, acceleration)
+#				pass
+#			else:
+#				velocity = lerp(velocity,Vector2.ZERO,friction)
+#				pass
+#			return input
 			pass
 		CONTROLLER:
 			rotation_dir = 0
 			velocity = Vector2()
 			if Input.is_action_pressed("point_right"):
 				rotation_dir += 1
+#				input.x += 1
 			if Input.is_action_pressed("point_left"):
 				rotation_dir -= 1
+#				input.x -= 1
 			if Input.is_action_pressed("ui_down"):
 				velocity = Vector2(-speed, 0).rotated(rotation)
+#				input.y += 1
 			if Input.is_action_pressed("ui_up"):
 				velocity = Vector2(speed, 0).rotated(rotation)
+#				input.y -= 1
 			pass
 		MOBILE:
 			pass
+#	return input
 	#Dash Code
 	if Input.is_action_just_pressed("ui_select") and !is_dashing:#can_dash:
 		is_dashing = true
