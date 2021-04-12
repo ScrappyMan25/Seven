@@ -17,7 +17,7 @@ var rotation_speed = 5
 #for Dash
 var can_dash : bool = true
 var is_dashing : bool = false
-var dash_speed = 1000
+var dash_speed = 2000
 var dash_length = 0.2
 var dash_direction : Vector2
 
@@ -61,15 +61,19 @@ func get_input() -> void:
 		MOBILE:
 			pass
 	#Dash Code
-	if Input.is_action_just_pressed("ui_select") and can_dash:
+	if Input.is_action_just_pressed("ui_select") and !is_dashing:#can_dash:
 		is_dashing = true
-		can_dash = false
+#		can_dash = false
 		$DashTimer.start(dash_length)
 #		dash_direction = velocity.clamped(1) * dash_speed
-		dash_direction = Vector2.RIGHT.rotated(rotation) * dash_speed
+		if Input.is_action_pressed("ui_down"):
+			dash_direction = Vector2.RIGHT.rotated(rotation + 135) * dash_speed
+		else:
+			dash_direction = Vector2.RIGHT.rotated(rotation) * dash_speed
+		
 		$DashParticles.emitting = true
 	else:
-		can_dash = true
+#		can_dash = true
 		$DashParticles.emitting = false
 		pass
 	pass

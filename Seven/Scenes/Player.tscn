@@ -3,7 +3,7 @@
 [ext_resource path="res://Assets/PLACEHOLDER/Player.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Player.gd" type="Script" id=5]
 
-[sub_resource type="Curve" id=2]
+[sub_resource type="Curve" id=1]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), -2.96898, 0.0, 0, 0 ]
 
 [node name="Player" type="KinematicBody2D"]
@@ -23,13 +23,13 @@ spread = 180.0
 gravity = Vector2( 0, 0 )
 initial_velocity = 19.0
 angular_velocity = -180.0
-scale_amount_curve = SubResource( 2 )
+scale_amount_curve = SubResource( 1 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 rotation = 1.5708
 polygon = PoolVector2Array( 20.3206, 16.3036, 0.971176, -23.8111, -23.0976, 15.8317 )
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="PlayerSprite" type="Sprite" parent="."]
 rotation = 1.5708
 texture = ExtResource( 1 )
 [connection signal="timeout" from="DashTimer" to="." method="_on_DashTimer_timeout"]
