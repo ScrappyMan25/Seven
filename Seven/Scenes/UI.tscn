@@ -1,21 +1,30 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Assets/PixelEmulator-xq08.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Assets/NEONLEDLight.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Scripts/UI.gd" type="Script" id=2]
 
 [sub_resource type="DynamicFont" id=1]
-size = 32
+size = 40
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 50
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 40
 font_data = ExtResource( 1 )
 
 [node name="UI" type="CanvasLayer"]
+pause_mode = 2
 script = ExtResource( 2 )
 
 [node name="Score" type="Label" parent="."]
-modulate = Color( 1.2, 1.2, 1.2, 1 )
+modulate = Color( 0.894118, 1, 0.00784314, 1 )
 anchor_left = 0.5
-anchor_top = 0.083
+anchor_top = 0.1
 anchor_right = 0.5
-anchor_bottom = 0.083
+anchor_bottom = 0.1
 margin_left = -61.0
 margin_right = 61.0
 margin_bottom = 39.0
@@ -24,3 +33,79 @@ text = "Score"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Pause" type="Button" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -71.7094
+margin_top = 25.5455
+margin_right = -31.7094
+margin_bottom = 65.5455
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PauseButtons" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -113.0
+margin_top = -2.11896
+margin_right = 113.0
+margin_bottom = -2.11896
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Continue" type="Button" parent="PauseButtons"]
+modulate = Color( 1.2, 1.2, 1.2, 1 )
+margin_top = 256.0
+margin_right = 226.0
+margin_bottom = 303.0
+rect_min_size = Vector2( 226, 47 )
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="PauseButtons/Continue"]
+modulate = Color( 0.0862745, 1, 0, 1 )
+margin_right = 40.0
+margin_bottom = 14.0
+custom_fonts/font = SubResource( 2 )
+text = "Continue"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Exit" type="Button" parent="PauseButtons"]
+modulate = Color( 1, 0, 0, 1 )
+margin_left = 72.0
+margin_top = 307.0
+margin_right = 154.0
+margin_bottom = 344.0
+rect_min_size = Vector2( 82, 37 )
+size_flags_horizontal = 4
+size_flags_vertical = 4
+flat = true
+
+[node name="Label" type="Label" parent="PauseButtons/Exit"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -41.0
+margin_top = -18.5
+margin_right = 41.0
+margin_bottom = 18.5
+custom_fonts/font = SubResource( 3 )
+text = "EXIT"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="Pause" to="." method="_on_Pause_pressed"]
+[connection signal="pressed" from="PauseButtons/Continue" to="." method="_on_Continue_pressed"]
+[connection signal="pressed" from="PauseButtons/Exit" to="." method="_on_Exit_pressed"]

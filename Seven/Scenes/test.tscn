@@ -11,12 +11,24 @@ extents = Vector2( 486, 10 )
 [sub_resource type="Environment" id=2]
 background_mode = 4
 glow_enabled = true
-glow_intensity = 5.33
-glow_strength = 1.26
+glow_intensity = 4.0
+glow_strength = 1.18
+glow_blend_mode = 0
 
 [node name="Node" type="Node"]
 
 [node name="Background" parent="." instance=ExtResource( 2 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -512.0
+margin_top = -300.0
+margin_right = 512.0
+margin_bottom = 300.0
+
+[node name="Border" parent="Background" index="2"]
+modulate = Color( 0.0904083, 0.606374, 0.925781, 1 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 495.226, 253.286 )
@@ -58,3 +70,5 @@ position = Vector2( 590.408, 425.183 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 2 )
+
+[editable path="Background"]

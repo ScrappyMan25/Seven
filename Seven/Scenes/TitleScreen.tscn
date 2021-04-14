@@ -1,15 +1,47 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://Assets/PixelEmulator-xq08.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Assets/NEONLEDLight.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Scripts/TitleScreen.gd" type="Script" id=2]
 [ext_resource path="res://Scripts/FadeIn.gd" type="Script" id=3]
+[ext_resource path="res://Scenes/Background.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Assets/GameAssets/HyperNeonDelta.png" type="Texture" id=5]
 
-[sub_resource type="DynamicFont" id=1]
-size = 32
+[sub_resource type="Environment" id=1]
+background_mode = 4
+glow_enabled = true
+glow_intensity = 4.0
+glow_strength = 1.18
+glow_blend_mode = 0
+glow_hdr_threshold = 0.8
+
+[sub_resource type="Shader" id=2]
+code = "//shader_type canvas_item;
+//uniform sampler2D emission_texture;
+//uniform vec4 glow_color : hint_color = vec4(1.0);
+//void fragment()
+//{
+//	vec4 current_color = texture(TEXTURE,UV);
+//	vec4 emission_color = texture(emission_texture, UV);
+//
+//	if (emission_color.r > 0f)
+//	{
+//		COLOR = (emission_color + glow_color)
+//	}
+//	else
+//	{
+//		COLOR = current_color;
+//	}
+//
+//}"
+
+[sub_resource type="ShaderMaterial" id=3]
+shader = SubResource( 2 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 100
 font_data = ExtResource( 1 )
 
-[sub_resource type="Animation" id=2]
-resource_name = "fade_in"
+[sub_resource type="Animation" id=5]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:color")
@@ -32,20 +64,102 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button" type="Button" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -53.0
-margin_top = -21.3775
-margin_right = 53.0
-margin_bottom = 23.6225
-custom_fonts/font = SubResource( 1 )
-text = "Play"
+[node name="Background" parent="." instance=ExtResource( 4 )]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 1 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Button" type="HBoxContainer" parent="HBoxContainer"]
+margin_right = 508.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/Button"]
+margin_right = 508.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Play" type="Button" parent="HBoxContainer/Button/VBoxContainer"]
+modulate = Color( 0, 4.66, 0, 1 )
+margin_left = 137.0
+margin_top = 206.0
+margin_right = 371.0
+margin_bottom = 298.0
+rect_min_size = Vector2( 234, 92 )
+size_flags_horizontal = 4
+size_flags_vertical = 4
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="HBoxContainer/Button/VBoxContainer/Play"]
+modulate = Color( 0, 1, 0.101961, 1 )
+material = SubResource( 3 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 4
+custom_fonts/font = SubResource( 4 )
+text = "Play"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Quit" type="Button" parent="HBoxContainer/Button/VBoxContainer"]
+modulate = Color( 6.93, 0, 0, 1 )
+margin_left = 137.0
+margin_top = 302.0
+margin_right = 371.0
+margin_bottom = 394.0
+rect_min_size = Vector2( 234, 92 )
+size_flags_horizontal = 4
+size_flags_vertical = 4
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="HBoxContainer/Button/VBoxContainer/Quit"]
+modulate = Color( 0.231373, 0.839216, 0.141176, 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 4
+custom_fonts/font = SubResource( 4 )
+text = "EXIT"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Logo" type="TextureRect" parent="HBoxContainer"]
+modulate = Color( 0.8, 0.8, 0.8, 1 )
+margin_left = 512.0
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_horizontal = 7
+size_flags_vertical = 7
+texture = ExtResource( 5 )
+stretch_mode = 4
 
 [node name="FadeIn" type="ColorRect" parent="."]
 visible = false
@@ -58,7 +172,10 @@ __meta__ = {
 }
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="FadeIn"]
-anims/fade_in = SubResource( 2 )
-[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
+anims/fade_in = SubResource( 5 )
+[connection signal="pressed" from="HBoxContainer/Button/VBoxContainer/Play" to="." method="_on_Play_pressed"]
+[connection signal="pressed" from="HBoxContainer/Button/VBoxContainer/Quit" to="." method="_on_Quit_pressed"]
 [connection signal="fade_finished" from="FadeIn" to="." method="_on_FadeIn_fade_finished"]
 [connection signal="animation_finished" from="FadeIn/AnimationPlayer" to="FadeIn" method="_on_AnimationPlayer_animation_finished"]
+
+[editable path="Background"]
