@@ -19,6 +19,12 @@ config/name="Seven"
 run/main_scene="res://Scenes/SplashScreen.tscn"
 config/icon="res://icon.png"
 
+[display]
+
+window/size/height=576
+window/stretch/mode="2d"
+window/stretch/aspect="keep"
+
 [input]
 
 ui_accept={
