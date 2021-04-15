@@ -3,6 +3,7 @@ extends Control
 var scene_to_load : PackedScene
 var GameScene : PackedScene = preload("res://Scenes/test.tscn")
 func _ready():
+	get_tree().paused = false
 	pass # Replace with function body.
 
 func _on_FadeIn_fade_finished():
@@ -15,7 +16,6 @@ func _on_FadeIn_fade_finished():
 
 func _on_Play_pressed():
 	scene_to_load = GameScene
-	
 	$FadeIn.show()
 	$FadeIn.fade_in()
 	pass # Replace with function body.
