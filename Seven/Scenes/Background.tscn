@@ -22,12 +22,11 @@ void fragment()
 	{
 		COLOR = current_color;
 	}
-	
 }"
 
 [sub_resource type="ShaderMaterial" id=2]
 shader = SubResource( 1 )
-shader_param/glow_color = Color( 1, 0.984375, 0, 1 )
+shader_param/glow_color = Color( 1, 1, 1, 1 )
 shader_param/emission_texture = ExtResource( 4 )
 
 [node name="Background" type="Control"]

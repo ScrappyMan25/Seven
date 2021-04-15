@@ -1,14 +1,44 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Assets/NEONLEDLight.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Scripts/UI.gd" type="Script" id=2]
+[ext_resource path="res://Assets/GameAssets/Pause.png" type="Texture" id=3]
+[ext_resource path="res://Assets/GameAssets/PauseEmission.png" type="Texture" id=4]
 
 [sub_resource type="DynamicFont" id=1]
 size = 40
 font_data = ExtResource( 1 )
 
+[sub_resource type="Shader" id=4]
+code = "shader_type canvas_item;
+uniform sampler2D emission_texture;
+uniform vec4 glow_color : hint_color = vec4(1.0);
+void fragment()
+{
+	vec4 current_color = texture(TEXTURE,UV);
+	vec4 emission_color = texture(emission_texture, UV);
+	
+	if (emission_color.r > 0f)
+	{
+		COLOR = (emission_color + glow_color)
+	}
+	else
+	{
+		COLOR = current_color;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id=5]
+shader = SubResource( 4 )
+shader_param/glow_color = Color( 1, 0, 0, 1 )
+shader_param/emission_texture = ExtResource( 4 )
+
 [sub_resource type="DynamicFont" id=2]
 size = 50
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 40
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=3]
@@ -20,7 +50,7 @@ pause_mode = 2
 script = ExtResource( 2 )
 
 [node name="Score" type="Label" parent="."]
-modulate = Color( 0.894118, 1, 0.00784314, 1 )
+modulate = Color( 0.89, 2.91, 0.01, 1 )
 anchor_left = 0.5
 anchor_top = 0.1
 anchor_right = 0.5
@@ -30,17 +60,21 @@ margin_right = 61.0
 margin_bottom = 39.0
 custom_fonts/font = SubResource( 1 )
 text = "Score"
+align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Pause" type="Button" parent="."]
+[node name="Pause" type="TextureButton" parent="."]
+modulate = Color( 7.51, 0, 0, 1 )
+material = SubResource( 5 )
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -71.7094
-margin_top = 25.5455
-margin_right = -31.7094
-margin_bottom = 65.5455
+margin_left = -108.52
+margin_top = 28.3771
+margin_right = -44.5204
+margin_bottom = 92.3771
+texture_normal = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -60,9 +94,9 @@ __meta__ = {
 
 [node name="Continue" type="Button" parent="PauseButtons"]
 modulate = Color( 1.2, 1.2, 1.2, 1 )
-margin_top = 256.0
+margin_top = 235.0
 margin_right = 226.0
-margin_bottom = 303.0
+margin_bottom = 282.0
 rect_min_size = Vector2( 226, 47 )
 flat = true
 __meta__ = {
@@ -79,12 +113,33 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Restart" type="Button" parent="PauseButtons"]
+modulate = Color( 0, 0.576471, 1, 1 )
+margin_left = 35.0
+margin_top = 286.0
+margin_right = 191.0
+margin_bottom = 323.0
+rect_min_size = Vector2( 156, 37 )
+size_flags_horizontal = 4
+size_flags_vertical = 5
+flat = true
+
+[node name="Label" type="Label" parent="PauseButtons/Restart"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_fonts/font = SubResource( 6 )
+text = "Restart"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Exit" type="Button" parent="PauseButtons"]
 modulate = Color( 1, 0, 0, 1 )
 margin_left = 72.0
-margin_top = 307.0
+margin_top = 327.0
 margin_right = 154.0
-margin_bottom = 344.0
+margin_bottom = 364.0
 rect_min_size = Vector2( 82, 37 )
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -108,4 +163,5 @@ __meta__ = {
 }
 [connection signal="pressed" from="Pause" to="." method="_on_Pause_pressed"]
 [connection signal="pressed" from="PauseButtons/Continue" to="." method="_on_Continue_pressed"]
+[connection signal="pressed" from="PauseButtons/Restart" to="." method="_on_Restart_pressed"]
 [connection signal="pressed" from="PauseButtons/Exit" to="." method="_on_Exit_pressed"]

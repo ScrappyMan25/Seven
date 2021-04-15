@@ -13,8 +13,12 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	var collision : KinematicCollision2D = move_and_collide(direction * velocity * delta)
-	if collision:
-		bounce(collision)
+	if number_of_bounces != -1:
+		if collision:
+			bounce(collision)
+	else:
+		get_parent().get_node("UI").get_tree().paused = true
+		print("GameOver")
 	pass
 
 func bounce(collision : KinematicCollision2D):

@@ -1,21 +1,49 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Background.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/PlayerProjectile.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/UI.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Assets/GameAssets/Player/Emission.png" type="Texture" id=5]
+[ext_resource path="res://Scripts/GameScene.gd" type="Script" id=6]
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+uniform sampler2D emission_texture;
+uniform vec4 glow_color : hint_color = vec4(1.0);
+void fragment()
+{
+	vec4 current_color = texture(TEXTURE,UV);
+	vec4 emission_color = texture(emission_texture, UV);
+	
+	if (emission_color.r > 0f)
+	{
+		COLOR = (emission_color + glow_color)
+	}
+	else
+	{
+		COLOR = current_color;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/glow_color = Color( 0.894118, 0.784314, 0.784314, 1 )
+shader_param/emission_texture = ExtResource( 5 )
+
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 486, 10 )
 
-[sub_resource type="Environment" id=2]
+[sub_resource type="Environment" id=4]
 background_mode = 4
 glow_enabled = true
 glow_intensity = 4.0
-glow_strength = 1.18
-glow_blend_mode = 0
+glow_strength = 1.24
+glow_blend_mode = 1
+glow_hdr_threshold = 0.89
 
 [node name="Node" type="Node"]
+script = ExtResource( 6 )
 
 [node name="Background" parent="." instance=ExtResource( 2 )]
 anchor_left = 0.5
@@ -27,25 +55,27 @@ margin_top = -300.0
 margin_right = 512.0
 margin_bottom = 300.0
 
-[node name="Border" parent="Background" index="2"]
-modulate = Color( 0.0904083, 0.606374, 0.925781, 1 )
-
 [node name="Player" parent="." instance=ExtResource( 1 )]
+modulate = Color( 5.2, 1, 1, 1 )
+material = null
 position = Vector2( 495.226, 253.286 )
+
+[node name="PlayerSprite" parent="Player" index="3"]
+material = SubResource( 2 )
 
 [node name="Border" type="StaticBody2D" parent="."]
 position = Vector2( 511.265, 10 )
 scale = Vector2( 1.12, 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Border"]
-shape = SubResource( 1 )
+shape = SubResource( 3 )
 
 [node name="Border2" type="StaticBody2D" parent="."]
 position = Vector2( 512, 590 )
 scale = Vector2( 1.12, 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Border2"]
-shape = SubResource( 1 )
+shape = SubResource( 3 )
 
 [node name="Border3" type="StaticBody2D" parent="."]
 position = Vector2( 6.10352e-05, 297.677 )
@@ -53,7 +83,7 @@ rotation = 1.5708
 scale = Vector2( 0.64, 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Border3"]
-shape = SubResource( 1 )
+shape = SubResource( 3 )
 
 [node name="Border4" type="StaticBody2D" parent="."]
 position = Vector2( 1027.58, 292.632 )
@@ -61,7 +91,7 @@ rotation = 1.5708
 scale = Vector2( 0.64, 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Border4"]
-shape = SubResource( 1 )
+shape = SubResource( 3 )
 
 [node name="PlayerProjectile" parent="." instance=ExtResource( 3 )]
 position = Vector2( 590.408, 425.183 )
@@ -69,6 +99,14 @@ position = Vector2( 590.408, 425.183 )
 [node name="UI" parent="." instance=ExtResource( 4 )]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 2 )
+environment = SubResource( 4 )
+
+[node name="ScoreTimer" type="Timer" parent="."]
+autostart = true
+[connection signal="timeout" from="ScoreTimer" to="." method="_on_ScoreTimer_timeout"]
 
 [editable path="Background"]
+
+[editable path="Player"]
+
+[editable path="UI"]
