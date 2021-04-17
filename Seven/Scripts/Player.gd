@@ -6,6 +6,10 @@ const CONTROLLER = 1
 const MOBILE = 1
 var InputDevice
 
+#Getting Sound Scene
+var Game_Scene : Node
+var SoundScene : Node
+
 #Variables required for movement
 var speed : float = 400
 var velocity : Vector2 = Vector2.ZERO
@@ -25,6 +29,8 @@ var dash_direction : Vector2
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	Game_Scene = get_parent()
+	SoundScene = Game_Scene.get_node("SoundScene")
 	pass # Replace with function body.
 
 func _physics_process(_delta: float) -> void:
@@ -103,6 +109,7 @@ func get_input() -> void:
 		is_dashing = true
 #		can_dash = false
 		$DashTimer.start(dash_length)
+		SoundScene.get_node("Dash").play()
 #		dash_direction = velocity.clamped(1) * dash_speed
 		if Input.is_action_pressed("ui_down"):
 			dash_direction = Vector2.RIGHT.rotated(rotation + 135) * dash_speed

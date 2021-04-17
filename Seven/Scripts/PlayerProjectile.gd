@@ -30,7 +30,11 @@ func _physics_process(delta: float) -> void:
 
 func bounce(collision : KinematicCollision2D):
 	direction = direction.bounce(collision.normal)
+	if collision.collider is KinematicBody2D: #Player
+		number_of_bounces = 7
+		velocity = 490
+	else:
+		number_of_bounces -= 1
+		velocity = velocity - 70
 	print(number_of_bounces)
-	number_of_bounces -= 1
-	velocity = velocity - 70
 	pass
