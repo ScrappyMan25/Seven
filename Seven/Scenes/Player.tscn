@@ -60,4 +60,11 @@ polygon = PoolVector2Array( 30.9713, 30.9469, 0.388662, -30.041, -30.547, 31.123
 modulate = Color( 1.2, 1.2, 1.2, 1 )
 rotation = 1.5708
 texture = ExtResource( 2 )
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+position = Vector2( 0, -0.140312 )
+polygon = PoolVector2Array( -32.2559, 34.5132, -31.6946, -33.5361, 34.3903, -0.423462 )
 [connection signal="timeout" from="DashTimer" to="." method="_on_DashTimer_timeout"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]

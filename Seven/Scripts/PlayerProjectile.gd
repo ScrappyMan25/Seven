@@ -39,7 +39,7 @@ func bounce(collision : KinematicCollision2D):
 	print(number_of_bounces)
 	pass
 
-
-func _on_PlayerProjectile_tree_entered():
-	
+func _on_Area2D_body_entered(body):
+	if "Enemy_template" in body.name:
+		body.queue_free()
 	pass # Replace with function body.

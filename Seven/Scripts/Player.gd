@@ -9,6 +9,7 @@ var InputDevice
 #Getting Sound Scene
 var Game_Scene : Node
 var SoundScene : Node
+var EndGame : Node
 
 #Variables required for movement
 var speed : float = 400
@@ -21,6 +22,7 @@ var rotation_dir = 0
 var rotation_speed = 5
 
 #for Dash
+var num_dash = 1
 var can_dash : bool = true
 var is_dashing : bool = false
 var dash_speed = 2000
@@ -31,6 +33,7 @@ var dash_direction : Vector2
 func _ready() -> void:
 	Game_Scene = get_parent()
 	SoundScene = Game_Scene.get_node("SoundScene")
+	EndGame = Game_Scene.get_node("UI")
 	pass # Replace with function body.
 
 func _physics_process(_delta: float) -> void:
@@ -71,12 +74,12 @@ func get_input() -> void:
 		KEYBOARD:
 			look_at(get_global_mouse_position())
 			velocity = Vector2()
-			if Input.is_action_pressed("ui_down"):
-				velocity = Vector2(-speed, 0).rotated(rotation)
+#			if Input.is_action_pressed("ui_down"):
+#				velocity = Vector2(-speed, 0).rotated(rotation)
 #				input.y += 1
-			if Input.is_action_pressed("ui_up"):
+#			if Input.is_action_pressed("ui_up"):
 #				input.y -= 1
-				velocity = Vector2(speed, 0).rotated(rotation)
+#				velocity = Vector2(speed, 0).rotated(rotation)
 #			if velocity != Vector2.ZERO:
 #				velocity = lerp(velocity, velocity * speed, acceleration)
 #				pass
@@ -107,6 +110,7 @@ func get_input() -> void:
 	#Dash Code
 	if Input.is_action_just_pressed("ui_select") and !is_dashing:#can_dash:
 		is_dashing = true
+		num_dash -= 1
 #		can_dash = false
 		$DashTimer.start(dash_length)
 		SoundScene.get_node("Dash").play()
@@ -139,4 +143,15 @@ pass
 
 func _on_DashTimer_timeout() -> void:
 	is_dashing = false
+	pass # Replace with function body.
+
+
+func _on_Area2D_body_entered(body):
+	print(body.name)
+	if "Enemy_template" in body.name:
+		get_parent().get_node("UI").get_tree().paused = true
+		EndGame.get_node("Score").hide()
+		EndGame.get_node("GameOver").show()
+	if body.name == "PlayerProjectile":
+		num_dash += 1
 	pass # Replace with function body.

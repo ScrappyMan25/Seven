@@ -15,7 +15,7 @@ func spawn_Enemy() -> void:
 	var y = rand.randf_range(64, 536)
 	newEnemy.position.y = y
 	newEnemy.position.x = x
-	add_child(newEnemy)
+	add_child(newEnemy, true)
 	pass
 
 func _on_Enemy_spawn_timer_timeout():
