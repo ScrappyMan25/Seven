@@ -37,11 +37,9 @@ func update_score(score : int) -> void:
 		$GameOver/NewHighScoreLabel.show()
 		$GameOver/Result.hide()
 		$GameOver/NewHighScoreLabel.text = "NEW HIGH SCORE: "+ score as String
-		$NumberBounce.hide()
 		HighScore = score
 		save_highscore()
 	else:
-		$NumberBounce.hide()
 		$GameOver/NewHighScoreLabel.hide()
 		$GameOver/Result.show()
 		$GameOver/Result/FinalScore.text = "SCORE: "+score as String
