@@ -1,33 +1,28 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Assets/GameAssets/Background/BackgroundColour.png" type="Texture" id=1]
 [ext_resource path="res://Assets/GameAssets/Background/ArenaBorder.png" type="Texture" id=2]
 [ext_resource path="res://Assets/GameAssets/Background/Background.png" type="Texture" id=3]
 [ext_resource path="res://Assets/GameAssets/Background/ArenaBorderEmission.png" type="Texture" id=4]
+[ext_resource path="res://Scripts/GlowShader.shader" type="Shader" id=5]
+[ext_resource path="res://Assets/GameAssets/Background/BackgroundEmission.png" type="Texture" id=6]
 
-[sub_resource type="Shader" id=1]
-code = "shader_type canvas_item;
-uniform sampler2D emission_texture;
-uniform vec4 glow_color : hint_color = vec4(1.0);
-void fragment()
-{
-	vec4 current_color = texture(TEXTURE,UV);
-	vec4 emission_color = texture(emission_texture, UV);
-	
-	if (emission_color.r > 0f)
-	{
-		COLOR = (emission_color + glow_color)
-	}
-	else
-	{
-		COLOR = current_color;
-	}
-}"
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 5 )
+shader_param/glow_color = Color( 0.992157, 0.105882, 1, 1 )
+shader_param/emission_teture = ExtResource( 6 )
 
 [sub_resource type="ShaderMaterial" id=2]
-shader = SubResource( 1 )
-shader_param/glow_color = Color( 1, 1, 1, 1 )
-shader_param/emission_texture = ExtResource( 4 )
+shader = ExtResource( 5 )
+shader_param/glow_color = Color( 0.113725, 0.968627, 0.972549, 1 )
+shader_param/emission_teture = ExtResource( 4 )
+
+[sub_resource type="Environment" id=3]
+background_mode = 4
+glow_enabled = true
+glow_intensity = 1.94
+glow_strength = 1.22
+glow_blend_mode = 0
 
 [node name="Background" type="Control"]
 anchor_right = 1.0
@@ -37,7 +32,7 @@ __meta__ = {
 }
 
 [node name="BackgroundColour" type="TextureRect" parent="."]
-modulate = Color( 1.2, 1.2, 1.2, 1 )
+modulate = Color( 0, 0, 0, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 1 )
@@ -47,7 +42,8 @@ __meta__ = {
 }
 
 [node name="Arena" type="TextureRect" parent="."]
-modulate = Color( 1.2, 1.2, 1.2, 0.34 )
+modulate = Color( 0.992157, 0.105882, 1, 0.411765 )
+material = SubResource( 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 3 )
@@ -57,7 +53,7 @@ __meta__ = {
 }
 
 [node name="Border" type="TextureRect" parent="."]
-modulate = Color( 0.109804, 0.788235, 0.921569, 1 )
+modulate = Color( 0.113725, 0.968627, 0.972549, 1 )
 material = SubResource( 2 )
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -66,3 +62,6 @@ stretch_mode = 4
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 3 )

@@ -98,7 +98,7 @@ size_flags_vertical = 3
 alignment = 1
 
 [node name="Play" type="Button" parent="HBoxContainer/Button/VBoxContainer"]
-modulate = Color( 0, 1.2, 0, 1 )
+modulate = Color( 0.113725, 0.968627, 0.972549, 1 )
 margin_left = 137.0
 margin_top = 206.0
 margin_right = 371.0
@@ -113,10 +113,12 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="HBoxContainer/Button/VBoxContainer/Play"]
-modulate = Color( 0, 20.35, 0.1, 1 )
+modulate = Color( 0.113725, 0.968627, 0.972549, 1 )
 material = SubResource( 3 )
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = 4.23785
+margin_right = 4.23785
 size_flags_horizontal = 4
 custom_fonts/font = SubResource( 4 )
 text = "Play"

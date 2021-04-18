@@ -2,18 +2,18 @@
 
 [ext_resource path="res://Assets/NEONLEDLight.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Scripts/UI.gd" type="Script" id=2]
-[ext_resource path="res://Assets/GameAssets/Pause.png" type="Texture" id=3]
-[ext_resource path="res://Assets/GameAssets/PauseEmission.png" type="Texture" id=4]
-
-[sub_resource type="DynamicFont" id=15]
-size = 40
-font_data = ExtResource( 1 )
+[ext_resource path="res://Assets/GameAssets/CogEmission.png" type="Texture" id=3]
+[ext_resource path="res://Assets/GameAssets/Cog.png" type="Texture" id=4]
 
 [sub_resource type="DynamicFont" id=1]
 size = 40
 font_data = ExtResource( 1 )
 
-[sub_resource type="Shader" id=2]
+[sub_resource type="DynamicFont" id=2]
+size = 40
+font_data = ExtResource( 1 )
+
+[sub_resource type="Shader" id=3]
 code = "shader_type canvas_item;
 uniform sampler2D emission_texture;
 uniform vec4 glow_color : hint_color = vec4(1.0);
@@ -32,17 +32,13 @@ void fragment()
 	}
 }"
 
-[sub_resource type="ShaderMaterial" id=3]
-shader = SubResource( 2 )
-shader_param/glow_color = Color( 1, 0, 0, 1 )
-shader_param/emission_texture = ExtResource( 4 )
-
-[sub_resource type="DynamicFont" id=4]
-size = 50
-font_data = ExtResource( 1 )
+[sub_resource type="ShaderMaterial" id=4]
+shader = SubResource( 3 )
+shader_param/glow_color = Color( 0.113725, 0.968627, 0.972549, 1 )
+shader_param/emission_texture = ExtResource( 3 )
 
 [sub_resource type="DynamicFont" id=5]
-size = 40
+size = 50
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=6]
@@ -50,11 +46,11 @@ size = 40
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=7]
-size = 50
+size = 40
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=8]
-size = 40
+size = 50
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=9]
@@ -62,11 +58,11 @@ size = 40
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=10]
-size = 50
+size = 40
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=11]
-size = 70
+size = 50
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=12]
@@ -74,10 +70,14 @@ size = 70
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=13]
-size = 50
+size = 70
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=14]
+size = 50
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=15]
 size = 30
 font_data = ExtResource( 1 )
 
@@ -90,14 +90,14 @@ margin_left = 34.4326
 margin_top = 25.9568
 margin_right = 433.433
 margin_bottom = 62.9568
-custom_fonts/font = SubResource( 15 )
+custom_fonts/font = SubResource( 1 )
 text = "Number Of Bounces"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Score" type="Label" parent="."]
-modulate = Color( 0.89, 2.91, 0.01, 1 )
+modulate = Color( 0.996078, 1, 0.258824, 1 )
 anchor_left = 0.5
 anchor_top = 0.1
 anchor_right = 0.5
@@ -105,7 +105,7 @@ anchor_bottom = 0.1
 margin_left = -61.0
 margin_right = 61.0
 margin_bottom = 39.0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 text = "Score"
 align = 1
 __meta__ = {
@@ -113,15 +113,15 @@ __meta__ = {
 }
 
 [node name="Pause" type="TextureButton" parent="."]
-modulate = Color( 7.51, 0, 0, 1 )
-material = SubResource( 3 )
+modulate = Color( 0.113725, 0.968627, 0.972549, 1 )
+material = SubResource( 4 )
 anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -108.52
 margin_top = 28.3771
 margin_right = -44.5204
 margin_bottom = 92.3771
-texture_normal = ExtResource( 3 )
+texture_normal = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -153,17 +153,17 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="PauseButtons/Continue"]
-modulate = Color( 0.0862745, 1, 0, 1 )
+modulate = Color( 0.113725, 0.968627, 0.972549, 1 )
 margin_right = 40.0
 margin_bottom = 14.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
 text = "Continue"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Restart" type="Button" parent="PauseButtons"]
-modulate = Color( 0, 0.576471, 1, 1 )
+modulate = Color( 0.113725, 0.654902, 0.972549, 1 )
 margin_left = 35.0
 margin_top = 286.0
 margin_right = 191.0
@@ -177,7 +177,7 @@ flat = true
 [node name="Label" type="Label" parent="PauseButtons/Restart"]
 margin_right = 40.0
 margin_bottom = 14.0
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 6 )
 text = "Restart"
 align = 1
 __meta__ = {
@@ -204,7 +204,7 @@ margin_left = -41.0
 margin_top = -18.5
 margin_right = 41.0
 margin_bottom = 18.5
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 7 )
 custom_colors/font_color = Color( 1, 0, 0, 1 )
 text = "EXIT"
 align = 1
@@ -229,8 +229,8 @@ margin_left = -83.0
 margin_top = 149.5
 margin_right = 83.0
 margin_bottom = 202.5
-custom_fonts/font = SubResource( 7 )
-custom_colors/font_color = Color( 0, 1, 0.0392157, 1 )
+custom_fonts/font = SubResource( 8 )
+custom_colors/font_color = Color( 0.113725, 0.654902, 0.972549, 1 )
 text = "RETRY"
 flat = true
 __meta__ = {
@@ -240,12 +240,12 @@ __meta__ = {
 [node name="Exit" type="Button" parent="GameOver"]
 anchor_top = 1.0
 anchor_bottom = 1.0
-margin_left = 87.0
-margin_top = -79.0
-margin_right = 211.0
-margin_bottom = -36.0
-custom_fonts/font = SubResource( 8 )
-custom_colors/font_color = Color( 0, 0.278431, 1, 1 )
+margin_left = 215.854
+margin_top = -144.176
+margin_right = 339.854
+margin_bottom = -101.176
+custom_fonts/font = SubResource( 9 )
+custom_colors/font_color = Color( 0.113725, 0.368627, 0.972549, 1 )
 text = "MENU"
 flat = true
 __meta__ = {
@@ -257,11 +257,11 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -181.0
-margin_top = -79.0
-margin_right = -87.0
-margin_bottom = -36.0
-custom_fonts/font = SubResource( 9 )
+margin_left = -338.322
+margin_top = -144.926
+margin_right = -244.322
+margin_bottom = -101.926
+custom_fonts/font = SubResource( 10 )
 custom_colors/font_color = Color( 1, 0, 0, 1 )
 text = "EXIT"
 flat = true
@@ -280,7 +280,7 @@ margin_top = -23.5
 margin_right = 510.0
 margin_bottom = 23.5
 size_flags_horizontal = 4
-custom_fonts/font = SubResource( 10 )
+custom_fonts/font = SubResource( 11 )
 custom_colors/font_color = Color( 1, 0, 0.937255, 1 )
 text = "NEW HIGH SCORE"
 align = 1
@@ -296,7 +296,7 @@ margin_left = -211.081
 margin_top = 73.9446
 margin_right = -8.08057
 margin_bottom = 138.945
-custom_fonts/font = SubResource( 11 )
+custom_fonts/font = SubResource( 12 )
 custom_colors/font_color = Color( 1, 0, 0, 1 )
 text = "GAME"
 __meta__ = {
@@ -311,7 +311,7 @@ margin_top = 74.7383
 margin_right = 240.044
 margin_bottom = 139.738
 rect_rotation = 16.3846
-custom_fonts/font = SubResource( 12 )
+custom_fonts/font = SubResource( 13 )
 custom_colors/font_color = Color( 1, 0, 0, 1 )
 text = "OVER"
 __meta__ = {
@@ -331,7 +331,7 @@ __meta__ = {
 [node name="FinalScore" type="Label" parent="GameOver/Result"]
 margin_right = 1024.0
 margin_bottom = 47.0
-custom_fonts/font = SubResource( 13 )
+custom_fonts/font = SubResource( 14 )
 custom_colors/font_color = Color( 0, 0.905882, 1, 1 )
 text = "SCORE"
 align = 1
@@ -340,8 +340,8 @@ align = 1
 margin_top = 51.0
 margin_right = 1024.0
 margin_bottom = 80.0
-custom_fonts/font = SubResource( 14 )
-custom_colors/font_color = Color( 0.956863, 0.0196078, 0.898039, 1 )
+custom_fonts/font = SubResource( 15 )
+custom_colors/font_color = Color( 0.956863, 0.898039, 0.0196078, 1 )
 text = "HIGH SCORE"
 align = 1
 [connection signal="pressed" from="Pause" to="." method="_on_Pause_pressed"]
