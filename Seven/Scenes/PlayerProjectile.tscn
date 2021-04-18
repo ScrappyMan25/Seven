@@ -145,7 +145,7 @@ shape = SubResource( 2 )
 shape = SubResource( 3 )
 
 [node name="1" type="Sprite" parent="."]
-modulate = Color( 1, 1, 1, 0 )
+modulate = Color( 1, 0, 0, 0 )
 position = Vector2( 6.77704, -35.0982 )
 scale = Vector2( 0.658386, 0.60583 )
 texture = ExtResource( 3 )
@@ -154,7 +154,7 @@ texture = ExtResource( 3 )
 anims/1 = SubResource( 4 )
 
 [node name="2" type="Sprite" parent="."]
-modulate = Color( 1, 1, 1, 0 )
+modulate = Color( 1, 0.913725, 0, 0 )
 position = Vector2( 24.243, 12.3548 )
 scale = Vector2( 0.658386, 0.60583 )
 texture = ExtResource( 4 )
@@ -163,7 +163,7 @@ texture = ExtResource( 4 )
 anims/2 = SubResource( 5 )
 
 [node name="3" type="Sprite" parent="."]
-modulate = Color( 1, 1, 1, 0 )
+modulate = Color( 0.407843, 1, 0, 0 )
 position = Vector2( -18.8289, 20.3396 )
 scale = Vector2( 0.566413, 0.553275 )
 texture = ExtResource( 5 )
@@ -172,7 +172,7 @@ texture = ExtResource( 5 )
 anims/3 = SubResource( 6 )
 
 [node name="4" type="Sprite" parent="."]
-modulate = Color( 1, 1, 1, 0 )
+modulate = Color( 0, 1, 0.976471, 0 )
 position = Vector2( 25.2041, -9.74162 )
 scale = Vector2( 0.526997, 0.553274 )
 texture = ExtResource( 6 )
@@ -181,7 +181,7 @@ texture = ExtResource( 6 )
 anims/4 = SubResource( 7 )
 
 [node name="5" type="Sprite" parent="."]
-modulate = Color( 1, 1, 1, 0 )
+modulate = Color( 0, 0.529412, 1, 0 )
 position = Vector2( -21.6352, -33.2111 )
 scale = Vector2( 0.566413, 0.60583 )
 texture = ExtResource( 7 )
@@ -190,7 +190,7 @@ texture = ExtResource( 7 )
 anims/5 = SubResource( 8 )
 
 [node name="6" type="Sprite" parent="."]
-modulate = Color( 1, 1, 1, 0 )
+modulate = Color( 0.654902, 0.619608, 0.611765, 0 )
 position = Vector2( 0.223755, 28.2482 )
 scale = Vector2( 0.448162, 0.500718 )
 texture = ExtResource( 8 )
@@ -199,7 +199,7 @@ texture = ExtResource( 8 )
 anims/6 = SubResource( 9 )
 
 [node name="7" type="Sprite" parent="."]
-modulate = Color( 1, 1, 1, 0 )
+modulate = Color( 1, 0, 0.796078, 0 )
 position = Vector2( -26.7148, -3.9736 )
 scale = Vector2( 0.59269, 0.632108 )
 texture = ExtResource( 9 )
