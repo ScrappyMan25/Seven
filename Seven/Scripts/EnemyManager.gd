@@ -1,11 +1,24 @@
 extends Node2D
 
 var Enemy = preload("res://Scenes/Enemy_template.tscn")
+var rand = RandomNumberGenerator.new()
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	spawn_Enemy()
+pass
 
 func spawn_Enemy() -> void:
 	var newEnemy = Enemy.instance()
+	rand.randomize()
+	var x = rand.randf_range(64, 960)
+	rand.randomize()
+	var y = rand.randf_range(64, 536)
+	newEnemy.position.y = y
+	newEnemy.position.x = x
+	add_child(newEnemy)
+	pass
+
+func _on_Enemy_spawn_timer_timeout():
+	spawn_Enemy()
+	$Enemy_spawn_timer.start()
 	pass

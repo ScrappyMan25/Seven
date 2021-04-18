@@ -8,9 +8,20 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Node2D",
+"class": "Connect",
+"language": "GDScript",
+"path": "res://Scripts/Connection.gd"
+}, {
+"base": "Node",
+"class": "Score",
+"language": "GDScript",
+"path": "res://Scripts/GameScene.gd"
+} ]
 _global_script_class_icons={
-
+"Connect": "",
+"Score": ""
 }
 
 [application]

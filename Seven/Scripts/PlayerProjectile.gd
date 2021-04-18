@@ -38,3 +38,8 @@ func bounce(collision : KinematicCollision2D):
 		velocity = velocity - 70
 	print(number_of_bounces)
 	pass
+
+
+func _on_PlayerProjectile_tree_entered():
+	
+	pass # Replace with function body.
