@@ -5,6 +5,7 @@ var direction : Vector2 = Vector2.ZERO
 
 var Game_Scene : Node
 var UIScene : Node
+var SoundScene : Node
 
 var number_of_bounces = 7
 
@@ -14,6 +15,7 @@ func _ready() -> void:
 	direction = Vector2(rand_range(-1,1), rand_range(-1,1)).normalized()
 	Game_Scene = get_parent()
 	UIScene = Game_Scene.get_node("UI")
+	SoundScene = Game_Scene.get_node("SoundScene")
 	pass # Replace with function body.
 
 func _physics_process(delta: float) -> void:
@@ -31,6 +33,7 @@ func _physics_process(delta: float) -> void:
 
 func bounce(collision : KinematicCollision2D):
 	direction = direction.bounce(collision.normal)
+	SoundScene.get_node("Ricochet").play()
 	if collision.collider is KinematicBody2D: #Player
 		number_of_bounces = 7
 		get_node("7/Animation7").play("7")
@@ -54,6 +57,7 @@ func bounce(collision : KinematicCollision2D):
 
 func _on_Area2D_body_entered(body):
 	if "Enemy_template" in body.name:
+		SoundScene.get_node("DestroyEnemy").play()
 		get_parent().addScore(100)
 		body.queue_free()
 	pass # Replace with function body.
