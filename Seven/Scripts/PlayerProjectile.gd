@@ -17,8 +17,9 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 func _physics_process(delta: float) -> void:
+	UIScene.call_deferred("update_bounce", number_of_bounces)
 	var collision : KinematicCollision2D = move_and_collide(direction * velocity * delta)
-	if number_of_bounces != -1:
+	if number_of_bounces != 0:
 		if collision:
 			bounce(collision)
 	else:
@@ -36,10 +37,10 @@ func bounce(collision : KinematicCollision2D):
 	else:
 		number_of_bounces -= 1
 		velocity = velocity - 70
-	print(number_of_bounces)
 	pass
 
 func _on_Area2D_body_entered(body):
 	if "Enemy_template" in body.name:
+		get_parent().addScore(100)
 		body.queue_free()
 	pass # Replace with function body.

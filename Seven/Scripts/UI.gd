@@ -26,6 +26,10 @@ func save_highscore():
 	file.close()
 	pass
 
+func update_bounce(bounce : int) -> void:
+	$NumberBounce.text = "BOUNCE: "+bounce as String
+	pass
+
 func update_score(score : int) -> void:
 	#Change the text of score lable
 	$Score.text = score as String
@@ -33,9 +37,11 @@ func update_score(score : int) -> void:
 		$GameOver/NewHighScoreLabel.show()
 		$GameOver/Result.hide()
 		$GameOver/NewHighScoreLabel.text = "NEW HIGH SCORE: "+ score as String
+		$NumberBounce.hide()
 		HighScore = score
 		save_highscore()
 	else:
+		$NumberBounce.hide()
 		$GameOver/NewHighScoreLabel.hide()
 		$GameOver/Result.show()
 		$GameOver/Result/FinalScore.text = "SCORE: "+score as String
