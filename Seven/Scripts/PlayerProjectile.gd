@@ -33,9 +33,22 @@ func bounce(collision : KinematicCollision2D):
 	direction = direction.bounce(collision.normal)
 	if collision.collider is KinematicBody2D: #Player
 		number_of_bounces = 7
+		get_node("7/Animation7").play("7")
 		velocity = 490
 	else:
 		number_of_bounces -= 1
+		if number_of_bounces == 1:
+			get_node("1/Animation1").play("1")
+		if number_of_bounces == 2:
+			get_node("2/Animation2").play("2")
+		if number_of_bounces == 3:
+			get_node("3/Animation3").play("3")
+		if number_of_bounces == 4:
+			get_node("4/Animation4").play("4")
+		if number_of_bounces == 5:
+			get_node("5/Animation5").play("5")
+		if number_of_bounces == 6:
+			get_node("6/Animation6").play("6")
 		velocity = velocity - 70
 	pass
 
